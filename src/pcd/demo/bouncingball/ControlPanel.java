@@ -11,7 +11,7 @@ public class ControlPanel extends JFrame implements ActionListener{
     public ControlPanel(Context ctx){
         context = ctx;
         setTitle("Control Panel");
-        setSize(250,60);
+        setSize(250,80);
         setResizable(false);
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent ev){

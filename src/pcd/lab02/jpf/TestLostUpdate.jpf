@@ -1,4 +1,4 @@
-target = pcd.lab02.jpf.TestLostUpdate
+target = pcd.lab02.jpf.TestLostUpdate.java
 
 listener=gov.nasa.jpf.listener.PreciseRaceDetector
 

@@ -14,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation files('JPF/jpf-core/build/jpf.jar')
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

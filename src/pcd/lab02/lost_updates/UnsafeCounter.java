@@ -9,7 +9,9 @@ public class UnsafeCounter {
 	}
 	
 	public void inc(){
-		cont++;
+		synchronized (this) {
+			cont++;
+		}
 	}
 	
 	public int getValue(){

@@ -4,11 +4,10 @@ public class TestCounter {
 
 	public static void main(String[] args) throws Exception {
 
-		Object lock = new Object();
 		int ntimes = Integer.parseInt("5000");
 		UnsafeCounter c = new UnsafeCounter(0);
-		Worker w1 = new Worker(c,ntimes, lock);
-		Worker w2 = new Worker(c,ntimes, lock);
+		Worker w1 = new Worker(c,ntimes);
+		Worker w2 = new Worker(c,ntimes);
 
 		Cron cron = new Cron();
 		cron.start();

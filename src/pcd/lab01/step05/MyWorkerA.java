@@ -7,7 +7,7 @@ public class MyWorkerA extends Worker {
 	}
 	
 	public void run(){
-		while (true){
+		while (true) {
 		  action1();	
 		  action2();	
 		}
@@ -23,4 +23,3 @@ public class MyWorkerA extends Worker {
 		// sleepFor(1);
 	}
 }
-

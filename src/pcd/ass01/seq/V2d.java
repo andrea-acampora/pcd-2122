@@ -24,12 +24,12 @@ public class V2d  {
         this.y = y;
     }
 
-    public V2d(V2d v){
+    public V2d(V2d v) {
         this.x = v.x;
         this.y = v.y;
     }
 
-    public V2d(P2d from, P2d to){
+    public V2d(P2d from, P2d to) {
         this.x = to.getX() - from.getX();
         this.y = to.getY() - from.getY();
     }

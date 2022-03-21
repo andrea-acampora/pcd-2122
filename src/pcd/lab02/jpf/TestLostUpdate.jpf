@@ -1,6 +1,4 @@
-target = pcd.lab02.jpf.TestLostUpdate.java
-
-classpath=bin/main
+target = pcd.lab02.jpf.TestLostUpdate
 
 listener=gov.nasa.jpf.listener.PreciseRaceDetector
 

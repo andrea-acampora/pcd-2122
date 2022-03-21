@@ -23,7 +23,7 @@ public class Simulator {
 
 		/* initializing boundary and bodies */
 
-		// testBodySet1_two_bodies();
+//		testBodySet1_two_bodies();
 		// testBodySet2_three_bodies();
 		// testBodySet3_some_bodies();
 		testBodySet4_many_bodies();
@@ -108,7 +108,7 @@ public class Simulator {
 		bounds = new Boundary(-4.0, -4.0, 4.0, 4.0);
 		bodies = new ArrayList<Body>();
 		bodies.add(new Body(0, new P2d(-0.1, 0), new V2d(0,0), 1));
-		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0,0), 2));		
+		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0,0), 2));
 	}
 
 	private void testBodySet2_three_bodies() {

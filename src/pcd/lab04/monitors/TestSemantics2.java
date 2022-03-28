@@ -106,6 +106,5 @@ public class TestSemantics2 {
 		new MyThread1(mon).start();
 		new MyThread3(mon).start();
 		new MyThread2(mon).start();
-
 	}
 }

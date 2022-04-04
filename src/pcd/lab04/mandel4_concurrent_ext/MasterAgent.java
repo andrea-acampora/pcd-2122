@@ -83,7 +83,7 @@ public class MasterAgent extends Thread {
 		    		long t1 = System.currentTimeMillis();
 		    		view.changeState("Completed - time elapsed: "+(t1-t0));
 	      		} else {
-	      			log("interrupted");
+	      			log("interruptedwaitCompletion");
 		    		view.changeState("Interrupted");	      			
 	      		}
 			} catch (Exception ex) {

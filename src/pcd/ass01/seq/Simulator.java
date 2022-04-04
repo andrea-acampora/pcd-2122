@@ -1,5 +1,7 @@
 package pcd.ass01.seq;
 
+import pcd.lab01.step04.Chrono;
+
 import java.util.*;
 
 public class Simulator {
@@ -40,6 +42,8 @@ public class Simulator {
 
 		/* simulation loop */
 
+		Chrono time = new Chrono();
+		time.start();
 		while (iter < nSteps) {
 
 			/* update bodies velocity */
@@ -79,6 +83,8 @@ public class Simulator {
 			viewer.display(bodies, vt, iter, bounds);
 
 		}
+		time.stop();
+		System.out.println("Time elapsed: " + time.getTime() + " ms.");
 	}
 
 	private V2d computeTotalForceOnBody(Body b) {
@@ -134,7 +140,7 @@ public class Simulator {
 
 	private void testBodySet4_many_bodies() {
 		bounds = new Boundary(-6.0, -6.0, 6.0, 6.0);
-		int nBodies = 1000;
+		int nBodies = 2000;
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {

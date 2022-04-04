@@ -1,5 +1,5 @@
 target = pcd.lab05.jpf.TestCheckAct
 
-classpath=bin/main
+classpath=out/production/classes
 
 report.console.property_violation=error,trace

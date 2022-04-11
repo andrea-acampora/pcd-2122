@@ -94,6 +94,7 @@ public class CounterGUI extends JFrame implements ActionListener {
 
 	public void updateCountValue(int value) {
 		SwingUtilities.invokeLater(()-> {
+			System.out.println("view count value: " + value );
 			display.setText("" + value);
 		});
 	}

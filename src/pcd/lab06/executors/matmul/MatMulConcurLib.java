@@ -23,12 +23,12 @@ public class MatMulConcurLib {
 	
 	public Mat matmul(Mat matA, Mat matB) throws MatMulException {
 		Mat matC = new Mat(matA.getNRows(), matB.getNColumns());
+		//In generale l'istanziamento dell'executor (che crea i thread) non si fa qui !!!!!!!!!!!!!!! ( ad ogni esecuzione questo crea nuovi thread).
 		exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);		
 		try {
 			for (int i = 0; i < matA.getNRows(); i++){
 				for (int j = 0; j < matB.getNColumns(); j++){
-					exec.execute(new ComputeElemTask(i,j,matA,matB,matC));
-					
+					exec.execute(new ComputeElemTask(i, j, matA, matB, matC));
 					// Alternative: using a lambda expression to specify the task
 					/* 					
 					exec.execute(() -> {

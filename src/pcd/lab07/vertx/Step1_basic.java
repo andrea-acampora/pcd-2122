@@ -18,7 +18,7 @@ public class Step1_basic {
 		
 		/* version 4.0 - future (promise) based API */
 		
-		Future<Buffer> fut = fs.readFile("build.gradle");
+		Future<Buffer> fut = fs.readFile("build.gradle.kts");
 		fut.onComplete((AsyncResult<Buffer> res) -> {
 			log("BUILD \n" + res.result().toString().substring(0,160));
 		});
@@ -33,7 +33,6 @@ public class Step1_basic {
 	}
 	
 	private static void log(String msg) {
-		System.out.println("" + Thread.currentThread() + " " + msg);
+		System.out.println("[REACTIVE AGENT] " + "[" + Thread.currentThread() + "]" + msg);
 	}
 }
-

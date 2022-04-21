@@ -41,7 +41,7 @@ class TestPromise extends AbstractVerticle {
 	}
 
 	private void log(String msg) {
-		System.out.println("[REACTIVE AGENT] " + msg);
+		System.out.println("[REACTIVE AGENT] " + "[" + Thread.currentThread() + "]" + msg);
 	}
 }
 
@@ -52,4 +52,3 @@ public class Step4_promise {
 		vertx.deployVerticle(new TestPromise());
 	}
 }
-

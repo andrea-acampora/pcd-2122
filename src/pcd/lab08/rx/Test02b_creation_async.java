@@ -17,7 +17,9 @@ public class Test02b_creation_async {
 						emitter.onNext(i);
 						Thread.sleep(200);
 						i++;
-					} catch (Exception ex){}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
 			}).start();
 		 });
@@ -42,7 +44,7 @@ public class Test02b_creation_async {
 	}
 	
 	static private void log(String msg) {
-		System.out.println("[ " + Thread.currentThread().getName() + "  ] " + msg);
+		System.out.println("[ " + Thread.currentThread().getName() + " ] " + msg);
 	}
 
 }

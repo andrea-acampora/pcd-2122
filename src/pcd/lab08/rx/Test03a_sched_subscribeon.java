@@ -35,7 +35,7 @@ public class Test03a_sched_subscribeon {
 			.map(v -> { log("map 2 " + v); return v + 1; });		
 
 		src
-			.subscribeOn(Schedulers.computation()) 	
+			.subscribeOn(Schedulers.computation())
 			.subscribe(v -> {									
 				log("sub 1 " + v);
 			});
@@ -62,9 +62,7 @@ public class Test03a_sched_subscribeon {
 		        .subscribeOn(Schedulers.computation())
 				.map(w -> { log("map " + w); return w * w; })		// by the RX comp thread;
 		  )
-		  .blockingSubscribe(v -> {
-			 log("sub > " + v); 
-		  });
+		  .blockingSubscribe(v -> log("sub > " + v));
 		
 	}
 		

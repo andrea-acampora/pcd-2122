@@ -9,6 +9,7 @@ public class Test02c_creation_fromCallable {
 
 		System.out.println("\n=== TEST fromCallable | main thread ===\n");
 
+		// ha senso quando la lamba che passiamo è un compito asincrono che genera un valore
 		Flowable.fromCallable(() -> {
 		    log("started.");
 		    Thread.sleep(1000); 

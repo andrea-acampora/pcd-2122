@@ -14,7 +14,7 @@ public class ActorWithMultipleBehaviors extends AbstractBehavior<ActorWithMultip
 	public static class MsgOne implements ActorWithMultipleBehaviorsBaseMsg {}
 	public static class MsgTwo implements ActorWithMultipleBehaviorsBaseMsg {}
 
-	private int initialState;
+	private final int initialState;
 	
 	private ActorWithMultipleBehaviors(ActorContext<ActorWithMultipleBehaviorsBaseMsg> context, int initialState) {
 		super(context);

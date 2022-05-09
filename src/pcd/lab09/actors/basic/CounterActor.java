@@ -45,8 +45,8 @@ public class CounterActor extends AbstractBehavior<CounterMsg> {
 	static public class IncMsg implements CounterMsg {}
 	
 	static public class GetValueMsg implements CounterMsg {
-		public final ActorRef replyTo;
-		public GetValueMsg(ActorRef replyTo) {
+		public final ActorRef<CounterUserMsg> replyTo;
+		public GetValueMsg(ActorRef<CounterUserMsg> replyTo) {
 			this.replyTo = replyTo;
 		}
 	}

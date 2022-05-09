@@ -25,6 +25,12 @@ dependencies {
     implementation("io.vertx:vertx-core:4.2.6")
     implementation("io.vertx:vertx-web:4.2.6")
     implementation("io.vertx:vertx-web-client:4.2.6")
+    /* module 3.1 - akka actors */
+    implementation(platform("com.typesafe.akka:akka-bom_2.13:2.6.19"))
+    implementation("com.typesafe.akka:akka-actor-typed_2.13")
+
+    implementation("org.slf4j:slf4j-api:1.7.25")
+    implementation("org.slf4j:slf4j-jdk14:1.7.36")
 
     implementation("com.github.javaparser:javaparser-symbol-solver-core:3.24.2")
 

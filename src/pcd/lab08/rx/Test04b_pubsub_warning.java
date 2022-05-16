@@ -38,10 +38,5 @@ public class Test04b_pubsub_warning {
 		subject2.onNext("Two");
 		subject2.onNext("Three");
 		subject2.onComplete();
-		
-		
-;
-	
-	
 	}
 }

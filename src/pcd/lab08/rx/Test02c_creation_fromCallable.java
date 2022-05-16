@@ -2,6 +2,7 @@ package pcd.lab08.rx;
 
 import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class Test02c_creation_fromCallable {
 
@@ -20,7 +21,6 @@ public class Test02c_creation_fromCallable {
 			log("result: " + s);
 		});
 
-		
 		Thread.sleep(2000); // <--- wait for the flow to finish
 	}
 	

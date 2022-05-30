@@ -1,43 +1,61 @@
-package pcd.ass01.seq;
+package pcd.ass02.ex1;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 
-/**
- * Simulation view
- *
- * @author aricci
- *
- */
 public class SimulationView {
         
 	private VisualiserFrame frame;
 	
-    public SimulationView(int w, int h){
-    	frame = new VisualiserFrame(w,h);
+    public SimulationView(int w, int h,  Controller contr){
+    	frame = new VisualiserFrame(w, h, contr);
     }
         
-    public void display(ArrayList<Body> bodies, double vt, long iter, Boundary bounds){
- 	   frame.display(bodies, vt, iter, bounds); 
+    public void display(SimulationModel.SimulationSnapshot snap){
+ 	   frame.display(snap); 
     }
     
-    public static class VisualiserFrame extends JFrame {
+    public static class VisualiserFrame extends JFrame implements ActionListener {
 
-        private VisualiserPanel panel;
-
-        public VisualiserFrame(int w, int h){
+        private VisualiserPanel bodyPanel;
+        private Controller controller;
+        private JButton start, stop;
+        
+        public VisualiserFrame(int w, int h, Controller contr){
             setTitle("Bodies Simulation");
             setSize(w,h);
             setResizable(false);
-            panel = new VisualiserPanel(w,h);
-            getContentPane().add(panel);
+
+            start = new JButton("start");
+    		stop = new JButton("stop");
+    		stop.setEnabled(false);
+
+    		controller = contr;
+   		
+    		JPanel controlPanel = new JPanel();
+    		controlPanel.add(start);
+    		controlPanel.add(stop);
+
+            bodyPanel = new VisualiserPanel(w,h);
+    		bodyPanel.setSize(w,h);
+
+    		JPanel cp = new JPanel();
+    		LayoutManager layout = new BorderLayout();
+    		cp.setLayout(layout);
+    		cp.add(BorderLayout.NORTH,controlPanel);
+    		cp.add(BorderLayout.CENTER,bodyPanel);
+    		setContentPane(cp);		
+    		            
             addWindowListener(new WindowAdapter(){
     			public void windowClosing(WindowEvent ev){
     				System.exit(-1);
@@ -46,30 +64,46 @@ public class SimulationView {
     				System.exit(-1);
     			}
     		});
-    		this.setVisible(true);
-        }
+
+            this.setVisible(true);
+    		start.addActionListener(this);
+    		stop.addActionListener(this);	
+    	}
+    	
+    	public void actionPerformed(ActionEvent ev){
+    		Object src = ev.getSource();
+    		if (src == start){	
+    			controller.notifyStarted();
+    			stop.setEnabled(true);
+       			start.setEnabled(false);
+    			bodyPanel.requestFocusInWindow();
+       		} else if (src == stop){
+    			controller.notifyStopped();
+    			start.setEnabled(true);
+    			stop.setEnabled(false);
+    			bodyPanel.requestFocusInWindow();
+    		}
+    	}
         
-        public void display(ArrayList<Body> bodies, double vt, long iter, Boundary bounds){
+        public void display(SimulationModel.SimulationSnapshot snap){
         	try {
-	        	SwingUtilities.invokeAndWait(() -> {
-	        		panel.display(bodies, vt, iter, bounds);
+	        	SwingUtilities.invokeLater(() -> {
+	        		bodyPanel.display(snap);
 	            	repaint();
 	        	});
         	} catch (Exception ex) {}
         };
         
         public void updateScale(double k) {
-        	panel.updateScale(k);
+        	bodyPanel.updateScale(k);
         }    	
     }
 
     public static class VisualiserPanel extends JPanel implements KeyListener {
         
-    	private ArrayList<Body> bodies;
+    	SimulationModel.SimulationSnapshot snap;
     	private Boundary bounds;
     	
-    	private long nIter;
-    	private double vt;
     	private double scale = 1;
     	
         private long dx;
@@ -86,7 +120,7 @@ public class SimulationView {
         }
 
         public void paint(Graphics g){    		    		
-    		if (bodies != null) {
+    		if (snap != null) {
         		Graphics2D g2 = (Graphics2D) g;
         		
         		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -95,7 +129,8 @@ public class SimulationView {
         		          RenderingHints.VALUE_RENDER_QUALITY);
         		g2.clearRect(0,0,this.getWidth(),this.getHeight());
 
-        		
+                Boundary bounds = snap.getBounds();
+
         		int x0 = getXcoord(bounds.getX0());
         		int y0 = getYcoord(bounds.getY0());
         		
@@ -104,7 +139,7 @@ public class SimulationView {
         		
     			g2.drawRect(x0, y0 - ht, wd, ht);
     			
-	    		bodies.forEach( b -> {
+	    		snap.getBodies().forEach( b -> {
 	    			P2d p = b.getPos();
 			        int radius = (int) (10*scale);
 			        if (radius < 1) {
@@ -112,8 +147,8 @@ public class SimulationView {
 			        }
 			        g2.drawOval(getXcoord(p.getX()),getYcoord(p.getY()), radius, radius); 
 			    });		    
-	    		String time = String.format("%.2f", vt);
-	    		g2.drawString("Bodies: " + bodies.size() + " - vt: " + time + " - nIter: " + nIter + " (UP for zoom in, DOWN for zoom out)", 2, 20);
+	    		String time = String.format("%.2f", snap.getVT());
+	    		g2.drawString("Bodies: " + snap.getBodies().size() + " - vt: " + time + " (UP for zoom in, DOWN for zoom out)", 2, 20);
     		}
         }
         
@@ -125,11 +160,8 @@ public class SimulationView {
         	return (int)(dy - y*dy*scale);
         }
         
-        public void display(ArrayList<Body> bodies, double vt, long iter, Boundary bounds){
-            this.bodies = bodies;
-            this.bounds = bounds;
-            this.vt = vt;
-            this.nIter = iter;
+        public void display(SimulationModel.SimulationSnapshot snap){
+            this.snap = snap;
         }
         
         public void updateScale(double k) {
